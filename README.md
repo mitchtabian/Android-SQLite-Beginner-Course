@@ -1,5 +1,5 @@
 
-<img src=''/>
+<img src='https://s3.amazonaws.com/codingwithmitch-static-and-media/media/android/None/SQLite.jpg'/>
 
 <h1>Android SQLite Beginner Course</h1>
 <h4>All the tools you need to start developing with Android</h4>
