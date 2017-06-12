@@ -13,6 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+
+import codingwithmitch.com.contactslist.Utils.CustomListAdapter;
+import codingwithmitch.com.contactslist.models.Contact;
 
 /**
  * Created by User on 6/12/2017.
@@ -22,12 +28,16 @@ public class ViewContactsFragment extends Fragment {
 
     private static final String TAG = "ViewContactsFragment";
 
+    private String testImageURL = "pbs.twimg.com/profile_images/616076655547682816/6gMRtQyY.jpg";
+
     private static final int STANDARD_APPBAR = 0;
     private static final int SEARCH_APPBAR = 1;
     private int mAppBarState;
 
 
     private AppBarLayout viewContactsBar, searchBar;
+    private CustomListAdapter adapter;
+    private ListView contactsList;
 
     @Nullable
     @Override
@@ -35,10 +45,13 @@ public class ViewContactsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_viewcontacts, container, false);
         viewContactsBar = (AppBarLayout) view.findViewById(R.id.viewContactsToolbar);
         searchBar = (AppBarLayout) view.findViewById(R.id.searchToolbar);
+        contactsList = (ListView) view.findViewById(R.id.contactsList);
         Log.d(TAG, "onCreateView: started.");
 
 
         setAppBarState(STANDARD_APPBAR);
+
+        setupContactsList();
 
         // navigate to add contacts fragment
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fabAddContact);
@@ -69,6 +82,28 @@ public class ViewContactsFragment extends Fragment {
 
 
         return view;
+    }
+
+    //
+    private void setupContactsList(){
+        final ArrayList<Contact> contacts = new ArrayList<>();
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+
+        adapter = new CustomListAdapter(getActivity(), R.layout.layout_contactslistitem, contacts, "https://");
+        contactsList.setAdapter(adapter);
     }
 
     /**

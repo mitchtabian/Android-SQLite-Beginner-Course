@@ -5,6 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import codingwithmitch.com.contactslist.Utils.UniversalImageLoader;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -15,8 +19,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: started.");
 
-        init();
+        initImageLoader();
 
+
+        init();
 
     }
 
@@ -31,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    private void initImageLoader(){
+        UniversalImageLoader universalImageLoader = new UniversalImageLoader(MainActivity.this);
+        ImageLoader.getInstance().init(universalImageLoader.getConfig());
     }
 
 }
