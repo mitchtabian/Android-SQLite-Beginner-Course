@@ -54,7 +54,8 @@
         android:src="@drawable/ic_person_add"
         app:elevation="10dp"
         app:fabSize="normal"
-        app:backgroundTint="@color/teal1"/>
+        app:backgroundTint="@color/teal1"
+        android:id="@+id/fabAddContact"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

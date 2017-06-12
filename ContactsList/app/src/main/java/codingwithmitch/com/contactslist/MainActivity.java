@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: started.");
 
         init();
+
+
     }
 
     /**
