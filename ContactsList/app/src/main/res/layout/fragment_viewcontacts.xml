@@ -51,10 +51,10 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:elevation="10dp"
+        android:src="@drawable/ic_person_add"
+        app:elevation="10dp"
         app:fabSize="normal"
-        android:backgroundTint="@color/teal1"
-        android:src="@drawable/ic_person_add"/>
+        app:backgroundTint="@color/teal1"/>
 
 
 </android.support.design.widget.CoordinatorLayout>
