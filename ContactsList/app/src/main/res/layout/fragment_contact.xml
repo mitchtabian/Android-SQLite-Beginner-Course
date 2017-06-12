@@ -42,12 +42,12 @@
                 android:textSize="30sp"
                 android:textColor="@color/black"
                 android:layout_marginStart="30dp"
-                android:id="@+id/tvName"/>
+                android:id="@+id/contactName"/>
 
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/tvName"
+                android:layout_below="@+id/contactName"
                 android:id="@+id/lvContactProperties">
 
             </ListView>
