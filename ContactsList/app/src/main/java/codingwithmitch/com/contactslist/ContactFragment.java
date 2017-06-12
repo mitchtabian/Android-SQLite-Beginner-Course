@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import codingwithmitch.com.contactslist.models.Contact;
+
 /**
  * Created by User on 6/12/2017.
  */
@@ -22,7 +24,14 @@ import android.widget.ImageView;
 public class ContactFragment extends Fragment{
     private static final String TAG = "ContactFragment";
 
+    //This will evade the nullpointer exception whena adding to a new bundle from MainActivity
+    public ContactFragment(){
+        super();
+        setArguments(new Bundle());
+    }
+
     private Toolbar toolbar;
+    private Contact mContact;
 
     @Nullable
     @Override
@@ -30,8 +39,11 @@ public class ContactFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
         toolbar = (Toolbar) view.findViewById(R.id.contactToolbar);
         Log.d(TAG, "onCreateView: started.");
+        mContact = getContactFromBundle();
 
-
+        if(mContact != null){
+            Log.d(TAG, "onCreateView: received contact: " + mContact.getName());
+        }
 
         //required for setting up the toolbar
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -54,13 +66,7 @@ public class ContactFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked the edit icon.");
-                EditContactFragment fragment = new EditContactFragment();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                // reaplce whatever is in the fragment_container view with this fragment,
-                // amd add the transaction to the back stack so the user can navigate back
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.addToBackStack(getString(R.string.edit_contact_fragment));
-                transaction.commit();
+
             }
         });
 
@@ -81,6 +87,17 @@ public class ContactFragment extends Fragment{
                 Log.d(TAG, "onOptionsItemSelected: deleting contact.");
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private Contact getContactFromBundle(){
+        Log.d(TAG, "getContactFromBundle: arguments: " + getArguments());
+
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            return bundle.getParcelable(getString(R.string.contact));
+        }else{
+            return null;
+        }
     }
 }
 

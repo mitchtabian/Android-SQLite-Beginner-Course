@@ -29,9 +29,17 @@ import codingwithmitch.com.contactslist.models.Contact;
 public class ViewContactsFragment extends Fragment {
 
     private static final String TAG = "ViewContactsFragment";
-
     private String testImageURL = "pbs.twimg.com/profile_images/616076655547682816/6gMRtQyY.jpg";
 
+
+
+    public interface OnContactSelectedListener{
+        public void OnContactSelected(Contact con);
+    }
+    OnContactSelectedListener mContactListener;
+
+
+    //variables and widgets
     private static final int STANDARD_APPBAR = 0;
     private static final int SEARCH_APPBAR = 1;
     private int mAppBarState;
@@ -86,6 +94,17 @@ public class ViewContactsFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try{
+            mContactListener = (OnContactSelectedListener) getActivity();
+        }catch (ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
+        }
+    }
+
     //
     private void setupContactsList(){
         final ArrayList<Contact> contacts = new ArrayList<>();
@@ -111,13 +130,9 @@ public class ViewContactsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "onClick: navigating to " + getString(R.string.contact_fragment));
-                ContactFragment fragment = new ContactFragment();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                // reaplce whatever is in the fragment_container view with this fragment,
-                // amd add the transaction to the back stack so the user can navigate back
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.addToBackStack(getString(R.string.contact_fragment));
-                transaction.commit();
+
+                //pass the contact to the interface and send it to MainActivity
+                mContactListener.OnContactSelected(contacts.get(position));
             }
         });
     }
