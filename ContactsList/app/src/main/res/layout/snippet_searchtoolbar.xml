@@ -4,7 +4,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_height="50dp"
         android:layout_width="match_parent"
-        android:id="@+id/viewContactsToolbar"
+        android:id="@+id/searchToolbar"
         android:background="@drawable/grey_border_bottom">
 
         <android.support.v7.widget.Toolbar
@@ -27,7 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Find Contacts"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="20sp"
                     android:background="@null"
                     android:id="@+id/etSearchContacts"
