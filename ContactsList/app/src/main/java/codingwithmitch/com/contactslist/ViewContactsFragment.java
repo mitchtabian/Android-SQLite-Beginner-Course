@@ -2,12 +2,10 @@ package codingwithmitch.com.contactslist;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +17,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import codingwithmitch.com.contactslist.Utils.CustomListAdapter;
+import codingwithmitch.com.contactslist.Utils.ContactListAdapter;
 import codingwithmitch.com.contactslist.models.Contact;
 
 /**
@@ -46,7 +44,7 @@ public class ViewContactsFragment extends Fragment {
 
 
     private AppBarLayout viewContactsBar, searchBar;
-    private CustomListAdapter adapter;
+    private ContactListAdapter adapter;
     private ListView contactsList;
 
     @Nullable
@@ -123,7 +121,7 @@ public class ViewContactsFragment extends Fragment {
         contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
         contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
 
-        adapter = new CustomListAdapter(getActivity(), R.layout.layout_contactslistitem, contacts, "https://");
+        adapter = new ContactListAdapter(getActivity(), R.layout.layout_contactslistitem, contacts, "https://");
         contactsList.setAdapter(adapter);
 
         contactsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
