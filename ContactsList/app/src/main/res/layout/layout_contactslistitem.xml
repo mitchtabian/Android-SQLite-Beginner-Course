@@ -14,13 +14,12 @@
         app:civ_border_width="0.5dp"
         app:civ_border_color="@color/black"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_backarrow"/>
+        />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/contactImage"
-        android:text="Mitch Tabian"
         android:layout_centerVertical="true"
         android:layout_marginStart="20dp"
         android:textSize="20sp"
