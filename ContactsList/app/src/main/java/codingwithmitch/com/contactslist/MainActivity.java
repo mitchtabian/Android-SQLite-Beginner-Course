@@ -1,5 +1,8 @@
 package codingwithmitch.com.contactslist;
 
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +16,10 @@ import codingwithmitch.com.contactslist.models.Contact;
 public class MainActivity extends AppCompatActivity implements ViewContactsFragment.OnContactSelectedListener {
 
     private static final String TAG = "MainActivity";
+
+
+
+    private static final int REQUEST_CODE = 1;
 
     @Override
     public void OnContactSelected(Contact contact) {
@@ -63,5 +70,70 @@ public class MainActivity extends AppCompatActivity implements ViewContactsFragm
         ImageLoader.getInstance().init(universalImageLoader.getConfig());
     }
 
+    /**
+     * Generalized method for asking permission. Can pass any array of permissions
+     * @param permissions
+     */
+    public void verifyPermissions(String[] permissions){
+        Log.d(TAG, "verifyPermissions: asking user for permissions.");
+        ActivityCompat.requestPermissions(
+                MainActivity.this,
+                permissions,
+                REQUEST_CODE
+        );
+    }
 
+    /**
+     * Checks to see if permission was granted for the passed parameters
+     * ONLY ONE PERMISSION MAYT BE CHECKED AT A TIME
+     * @param permission
+     * @return
+     */
+    public boolean checkPermission(String[] permission){
+        Log.d(TAG, "checkPermission: checking permissions for:" + permission[0]);
+
+        int permissionRequest = ActivityCompat.checkSelfPermission(
+                MainActivity.this,
+                permission[0]);
+
+        if(permissionRequest != PackageManager.PERMISSION_GRANTED){
+            Log.d(TAG, "checkPermission: \n Permissions was not granted for: " + permission[0]);
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: requestCode: " + requestCode);
+
+        switch(requestCode){
+            case REQUEST_CODE:
+                for(int i = 0; i < permissions.length; i++){
+                    if(grantResults[i] == PackageManager.PERMISSION_GRANTED){
+                        Log.d(TAG, "onRequestPermissionsResult: User has allowed permission to access: " + permissions[i]);
+                    }else{
+                        break;
+                    }
+                }
+                break;
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
