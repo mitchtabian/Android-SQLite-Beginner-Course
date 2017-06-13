@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 
+import codingwithmitch.com.contactslist.Utils.ChangePhotoDialog;
 import codingwithmitch.com.contactslist.Utils.UniversalImageLoader;
 import codingwithmitch.com.contactslist.models.Contact;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -93,6 +94,9 @@ public class EditContactFragment extends Fragment{
             public void onClick(View v) {
                 Log.d(TAG, "onClick: opening the 'image selection dialog box'.");
 
+                ChangePhotoDialog dialog = new ChangePhotoDialog();
+                dialog.show(getFragmentManager(), getString(R.string.change_photo_dialog));
+                
             }
         });
 
