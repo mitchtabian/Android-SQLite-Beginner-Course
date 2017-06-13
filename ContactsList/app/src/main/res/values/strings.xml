@@ -10,4 +10,14 @@
     <!-- keys -->
     <string name="contact">Contact</string>
 
+   <string-array name="device_options">
+       <item>Mobile</item>
+       <item>Home</item>
+       <item>Work</item>
+       <item>Work Fax</item>
+       <item>Home Fax</item>
+       <item>Pager</item>
+       <item>Other</item>
+   </string-array>
+
 </resources>
