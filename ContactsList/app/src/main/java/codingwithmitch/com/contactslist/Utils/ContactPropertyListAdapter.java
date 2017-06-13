@@ -91,6 +91,30 @@ public class ContactPropertyListAdapter extends ArrayAdapter<String> {
         //email
         if(property.contains("@")){
             holder.leftIcon.setImageResource(mContext.getResources().getIdentifier("@drawable/ic_email", null, mContext.getPackageName()));
+            holder.leftIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "onClick: opening email.");
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                    emailIntent.setType("plain/text");
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {property});
+                    mContext.startActivity(emailIntent);
+
+                    /* optional settings for sending emails
+                    String email = property;
+                    String subject = "subject";
+                    String body = "body...";
+
+                    String uriText = "mailto: + Uri.encode(email) + "?subject=" + Uri.encode(subject) +
+                    "&body=" + Uri.encode(body);
+                    Uri uri = Uri.parse(uriText);
+
+                    emailIntent.setData(uri);
+                    mContext.startActivitY(emailIntent);
+
+                     */
+                }
+            });
         }
         else if((property.length() != 0)){
             //Phone call
@@ -110,9 +134,18 @@ public class ContactPropertyListAdapter extends ArrayAdapter<String> {
                 }
             });
 
-
+            //setup the icon for sending text messages
             holder.rightIcon.setImageResource(mContext.getResources().getIdentifier("@drawable/ic_message", null, mContext.getPackageName()));
+            holder.rightIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "onClick: initiating text message....");
 
+                    //The number that we want to send SMS
+                    Intent smsIntent = new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", property, null));
+                    mContext.startActivity(smsIntent);
+                }
+            });
         }
 
 
