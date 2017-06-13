@@ -19,6 +19,7 @@ import android.widget.Spinner;
 
 
 import codingwithmitch.com.contactslist.Utils.ChangePhotoDialog;
+import codingwithmitch.com.contactslist.Utils.Init;
 import codingwithmitch.com.contactslist.Utils.UniversalImageLoader;
 import codingwithmitch.com.contactslist.models.Contact;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -92,11 +93,24 @@ public class EditContactFragment extends Fragment{
         ivCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: opening the 'image selection dialog box'.");
 
-                ChangePhotoDialog dialog = new ChangePhotoDialog();
-                dialog.show(getFragmentManager(), getString(R.string.change_photo_dialog));
-                
+                /*
+                Make sure all permissions have been verified before opening the dialog
+                 */
+                for( int i = 0; i < Init.PERMISSIONS.length; i++){
+                    String[] permission = {Init.PERMISSIONS[i]};
+                    if(((MainActivity)getActivity()).checkPermission(permission)){
+                        if(i == Init.PERMISSIONS.length - 1){
+                            Log.d(TAG, "onClick: opening the 'image selection dialog box'.");
+                            ChangePhotoDialog dialog = new ChangePhotoDialog();
+                            dialog.show(getFragmentManager(), getString(R.string.change_photo_dialog));
+                        }
+                    }else{
+                        ((MainActivity)getActivity()).verifyPermissions(permission);
+                    }
+                }
+
+
             }
         });
 
