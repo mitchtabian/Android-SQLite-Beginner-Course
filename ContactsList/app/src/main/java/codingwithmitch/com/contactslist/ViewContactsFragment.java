@@ -6,16 +6,20 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import codingwithmitch.com.contactslist.Utils.ContactListAdapter;
 import codingwithmitch.com.contactslist.models.Contact;
@@ -51,6 +55,7 @@ public class ViewContactsFragment extends Fragment {
     private AppBarLayout viewContactsBar, searchBar;
     private ContactListAdapter adapter;
     private ListView contactsList;
+    private EditText mSearchContacts;
 
     @Nullable
     @Override
@@ -59,6 +64,7 @@ public class ViewContactsFragment extends Fragment {
         viewContactsBar = (AppBarLayout) view.findViewById(R.id.viewContactsToolbar);
         searchBar = (AppBarLayout) view.findViewById(R.id.searchToolbar);
         contactsList = (ListView) view.findViewById(R.id.contactsList);
+        mSearchContacts = (EditText) view.findViewById(R.id.etSearchContacts);
         Log.d(TAG, "onCreateView: started.");
 
 
@@ -113,7 +119,7 @@ public class ViewContactsFragment extends Fragment {
     //
     private void setupContactsList(){
         final ArrayList<Contact> contacts = new ArrayList<>();
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        contacts.add(new Contact("Gary the Guy", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
         contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
         contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
         contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
@@ -129,6 +135,26 @@ public class ViewContactsFragment extends Fragment {
         contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
 
         adapter = new ContactListAdapter(getActivity(), R.layout.layout_contactslistitem, contacts, "https://");
+
+
+        mSearchContacts.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                String text = mSearchContacts.getText().toString().toLowerCase(Locale.getDefault());
+                adapter.filter(text);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         contactsList.setAdapter(adapter);
 
         contactsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -140,6 +166,8 @@ public class ViewContactsFragment extends Fragment {
                 mContactListener.OnContactSelected(contacts.get(position));
             }
         });
+
+
     }
 
     /**

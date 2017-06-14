@@ -85,38 +85,37 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/relLayout4"
             android:id="@+id/relLayout5"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:layout_marginTop="10dp">
 
             <ImageView
+                android:id="@+id/ivPhone"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_phone_grey"
-                android:id="@+id/ivPhone"
-                android:layout_centerVertical="true"
                 />
 
             <EditText
+                android:id="@+id/etContactPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_toRightOf="@+id/ivPhone"
                 android:inputType="textNoSuggestions"
-                android:textSize="16sp"
                 android:textColor="@color/black"
-                android:id="@+id/etContactPhone"
-                android:layout_marginStart="20dp"
-                android:layout_centerVertical="true"/>
+                android:textSize="16sp"/>
 
             <Spinner
+                android:id="@+id/selectDevice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/etContactPhone"
+                android:layout_below="@+id/ivPhone"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="50dp"
                 android:entries="@array/device_options"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginStart="20dp"
-                android:layout_below="@+id/ivPhone"
-                android:id="@+id/selectDevice"
-                android:layout_marginTop="50dp"
-                android:layout_alignStart="@+id/etContactPhone"/>
+                android:textSize="16sp"/>
 
         </RelativeLayout>
 

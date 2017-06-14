@@ -6,7 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,6 +49,7 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
     private Spinner mSelectDevice;
     private Toolbar toolbar;
     private String mSelectedImagePath;
+    private int mPreviousKeyStroke;
 
     @Nullable
     @Override
@@ -199,6 +203,66 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
             mSelectedImagePath = imagePath;
             UniversalImageLoader.setImage(imagePath, mContactImage, null, "");
         }
+    }
+
+    /**
+     * Initialize the onTextChangeListener for formatting the phonenumber
+     */
+    private void initOnTextChangeListener(){
+
+        mPhoneNumber.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                mPreviousKeyStroke = keyCode;
+
+                return false;
+            }
+        });
+
+        mPhoneNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                String number = s.toString();
+                Log.d(TAG, "afterTextChanged:  " + number);
+
+                if(number.length() == 3 && mPreviousKeyStroke != KeyEvent.KEYCODE_DEL
+                        && !number.contains("(")){
+                    number = String.format("(%s", s.toString().substring(0,3));
+                    mPhoneNumber.setText(number);
+                    mPhoneNumber.setSelection(number.length());
+                }
+                else if(number.length() == 5 && mPreviousKeyStroke != KeyEvent.KEYCODE_DEL
+                        && !number.contains(")")){
+                    number = String.format("(%s) %s",
+                            s.toString().substring(1,4),
+                            s.toString().substring(4,5));
+                    mPhoneNumber.setText(number);
+                    mPhoneNumber.setSelection(number.length());
+                }
+                else if(number.length() ==10 && mPreviousKeyStroke != KeyEvent.KEYCODE_DEL
+                        && !number.contains("-")){
+                    number = String.format("(%s) %s-%s",
+                            s.toString().substring(1,4),
+                            s.toString().substring(6,9),
+                            s.toString().substring(9,10));
+                    mPhoneNumber.setText(number);
+                    mPhoneNumber.setSelection(number.length());
+
+                }
+            }
+        });
     }
 }
 
