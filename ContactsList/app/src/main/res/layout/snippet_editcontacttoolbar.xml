@@ -29,8 +29,8 @@
                     android:layout_toRightOf="@+id/ivBackArrow"
                     android:textSize="20sp"
                     android:textColor="@color/white"
-                    android:text="Edit Contact"
-                    android:layout_marginStart="20dp"/>
+                    android:layout_marginStart="20dp"
+                    android:id="@+id/textContactToolbar"/>
 
                 <ImageView
                     android:layout_width="25dp"

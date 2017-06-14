@@ -19,7 +19,8 @@ import codingwithmitch.com.contactslist.models.Contact;
 
 public class MainActivity extends AppCompatActivity implements
         ViewContactsFragment.OnContactSelectedListener,
-        ContactFragment.OnEditContactListener {
+        ContactFragment.OnEditContactListener,
+        ViewContactsFragment.OnAddContactListener{
 
     private static final String TAG = "MainActivity";
 
@@ -56,6 +57,18 @@ public class MainActivity extends AppCompatActivity implements
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(getString(R.string.contact_fragment));
+        transaction.commit();
+    }
+
+
+    @Override
+    public void onAddContact() {
+        Log.d(TAG, "onAddContact: navigating to " + getString(R.string.add_contact_fragment));
+
+        AddContactFragment fragment = new AddContactFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(getString(R.string.add_contact_fragment));
         transaction.commit();
     }
 
@@ -154,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements
                 break;
         }
     }
+
 
 
 }

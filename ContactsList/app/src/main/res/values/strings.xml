@@ -7,9 +7,12 @@
     <string name="contact_fragment">ContactFragment</string>
     <string name="view_contacts_fragment">ViewContactsFragment</string>
     <string name="change_photo_dialog">ChangePhotoDialog</string>
+    <string name="add_contact_fragment">AddContactFragment</string>
 
     <!-- keys -->
     <string name="contact">Contact</string>
+    <string name="edit_contact">Edit Contact</string>
+    <string name="add_contact">Add Contact</string>
 
    <string-array name="device_options">
        <item>Mobile</item>
