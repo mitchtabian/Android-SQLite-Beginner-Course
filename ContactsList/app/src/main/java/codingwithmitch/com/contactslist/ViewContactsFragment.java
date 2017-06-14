@@ -1,6 +1,7 @@
 package codingwithmitch.com.contactslist;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -17,11 +18,15 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 import codingwithmitch.com.contactslist.Utils.ContactListAdapter;
+import codingwithmitch.com.contactslist.Utils.DatabaseHelper;
 import codingwithmitch.com.contactslist.models.Contact;
 
 /**
@@ -119,22 +124,48 @@ public class ViewContactsFragment extends Fragment {
     //
     private void setupContactsList(){
         final ArrayList<Contact> contacts = new ArrayList<>();
-        contacts.add(new Contact("Gary the Guy", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
-        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Gary the Guy", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+//        contacts.add(new Contact("Mitch Tabian", "(604) 855-1111", "Mobile","mitch@tabian.ca", testImageURL));
+        DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+        Cursor cursor = databaseHelper.getAllContacts();
 
-        adapter = new ContactListAdapter(getActivity(), R.layout.layout_contactslistitem, contacts, "https://");
+        //iterate through all the rows contained in the database
+        if(!cursor.moveToNext()){
+            Toast.makeText(getActivity(), "There are no contacts to show", Toast.LENGTH_SHORT).show();
+        }
+        while(cursor.moveToNext()){
+            contacts.add(new Contact(
+                    cursor.getString(1),//name
+                    cursor.getString(2),//phone number
+                    cursor.getString(3),//device
+                    cursor.getString(4),//email
+                    cursor.getString(5)//profile image uri
+            ));
+        }
+
+        //Log.d(TAG, "setupContactsList: image url: " + contacts.get(0).getProfileImage());
+
+        //sort the arraylist based on the contact name
+        Collections.sort(contacts, new Comparator<Contact>() {
+            @Override
+            public int compare(Contact o1, Contact o2) {
+                return o1.getName().compareToIgnoreCase(o2.getName());
+            }
+        });
+
+        adapter = new ContactListAdapter(getActivity(), R.layout.layout_contactslistitem, contacts, "");
 
 
         mSearchContacts.addTextChangedListener(new TextWatcher() {
