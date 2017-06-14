@@ -59,6 +59,8 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
         toolbar = (Toolbar) view.findViewById(R.id.editContactToolbar);
         Log.d(TAG, "onCreateView: started.");
 
+        mSelectedImagePath = null;
+
         //set the heading the for the toolbar
         TextView heading = (TextView) view.findViewById(R.id.textContactToolbar);
         heading.setText(getString(R.string.edit_contact));
