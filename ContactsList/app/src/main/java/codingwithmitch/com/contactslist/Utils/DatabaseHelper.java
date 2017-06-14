@@ -1,8 +1,12 @@
 package codingwithmitch.com.contactslist.Utils;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import codingwithmitch.com.contactslist.models.Contact;
 
 /**
  * Created by User on 6/13/2017.
@@ -45,5 +49,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * Insert a new contact into the database
+     * @param contact
+     * @return
+     */
+    public boolean addContact(Contact contact) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL1, contact.getName());
+        contentValues.put(COL2, contact.getPhonenumber());
+        contentValues.put(COL3, contact.getDevice());
+        contentValues.put(COL4, contact.getEmail());
+        contentValues.put(COL5, contact.getProfileImage());
+
+        long result = db.insert(TABLE_NAME, null, contentValues);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Retrieve all contacts from database
+     * @return
+     */
+    public Cursor getAllContacts(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+    }
 
 }
+
+
+
+
+
+
+

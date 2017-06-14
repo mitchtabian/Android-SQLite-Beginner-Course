@@ -2,6 +2,7 @@ package codingwithmitch.com.contactslist;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -20,8 +21,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import codingwithmitch.com.contactslist.Utils.ChangePhotoDialog;
+import codingwithmitch.com.contactslist.Utils.DatabaseHelper;
 import codingwithmitch.com.contactslist.Utils.Init;
 import codingwithmitch.com.contactslist.Utils.UniversalImageLoader;
 import codingwithmitch.com.contactslist.models.Contact;
@@ -80,17 +83,6 @@ public class AddContactFragment extends Fragment implements ChangePhotoDialog.On
         });
 
 
-        // save the new contact
-        ImageView ivCheckMark = (ImageView) view.findViewById(R.id.ivCheckMark);
-        ivCheckMark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: saving the contact.");
-                //execute the save method for the database
-
-            }
-        });
-
         // initiate the dialog box for choosing an image
         ImageView ivCamera = (ImageView) view.findViewById(R.id.ivCamera);
         ivCamera.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +104,31 @@ public class AddContactFragment extends Fragment implements ChangePhotoDialog.On
                         ((MainActivity)getActivity()).verifyPermissions(permission);
                     }
                 }
+            }
+        });
 
+        //set onclicklistenre to the 'checkmar' icon for saving a contact
+        ImageView confirmNewContact = (ImageView) view.findViewById(R.id.ivCheckMark);
+        confirmNewContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: attempting to save new contact.");
+                if(checkStringIfNull(mName.getText().toString())){
+                    Log.d(TAG, "onClick: saving new contact. " + mName.getText().toString() );
+
+                    DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+                    Contact contact = new Contact(mName.getText().toString(),
+                            mPhoneNumber.getText().toString(),
+                            mSelectDevice.getSelectedItem().toString(),
+                            mEmail.getText().toString(),
+                            mSelectedImagePath);
+                    if(databaseHelper.addContact(contact)){
+                        Toast.makeText(getActivity(), "Contact Saved", Toast.LENGTH_SHORT).show();
+                        getActivity().getSupportFragmentManager().popBackStack();
+                    }else{
+                        Toast.makeText(getActivity(), "Error Saving", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
             }
         });
@@ -121,6 +137,14 @@ public class AddContactFragment extends Fragment implements ChangePhotoDialog.On
         initOnTextChangeListener();
 
         return view;
+    }
+
+    private boolean checkStringIfNull(String string){
+        if(string.equals("")){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     /**
