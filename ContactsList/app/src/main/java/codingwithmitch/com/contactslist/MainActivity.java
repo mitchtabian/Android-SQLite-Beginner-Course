@@ -1,6 +1,7 @@
 package codingwithmitch.com.contactslist;
 
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +10,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 import codingwithmitch.com.contactslist.Utils.UniversalImageLoader;
 import codingwithmitch.com.contactslist.models.Contact;
@@ -85,6 +89,19 @@ public class MainActivity extends AppCompatActivity implements
     private void initImageLoader(){
         UniversalImageLoader universalImageLoader = new UniversalImageLoader(MainActivity.this);
         ImageLoader.getInstance().init(universalImageLoader.getConfig());
+    }
+
+    /**
+     * Compress a bitmap by the @param "quality"
+     * Quality can be anywhere from 1-100 : 100 being the highest quality.
+     * @param bitmap
+     * @param quality
+     * @return
+     */
+    public Bitmap compressBitmap(Bitmap bitmap, int quality){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, stream);
+        return bitmap;
     }
 
     /**

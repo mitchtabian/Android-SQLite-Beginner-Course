@@ -1,5 +1,6 @@
 package codingwithmitch.com.contactslist;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 
@@ -28,7 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by User on 6/12/2017.
  */
 
-public class EditContactFragment extends Fragment{
+public class EditContactFragment extends Fragment implements ChangePhotoDialog.OnPhotoReceivedListener{
     private static final String TAG = "EditContactFragment";
 
     //This will evade the nullpointer exception whena adding to a new bundle from MainActivity
@@ -104,6 +106,7 @@ public class EditContactFragment extends Fragment{
                             Log.d(TAG, "onClick: opening the 'image selection dialog box'.");
                             ChangePhotoDialog dialog = new ChangePhotoDialog();
                             dialog.show(getFragmentManager(), getString(R.string.change_photo_dialog));
+                            dialog.setTargetFragment(EditContactFragment.this, 0);
                         }
                     }else{
                         ((MainActivity)getActivity()).verifyPermissions(permission);
@@ -132,20 +135,7 @@ public class EditContactFragment extends Fragment{
         mSelectDevice.setSelection(position);
     }
 
-    /**
-     * Retrieves the selected contact from the bundle (coming from MainActivity)
-     * @return
-     */
-    private Contact getContactFromBundle(){
-        Log.d(TAG, "getContactFromBundle: arguments: " + getArguments());
 
-        Bundle bundle = this.getArguments();
-        if(bundle != null){
-            return bundle.getParcelable(getString(R.string.contact));
-        }else{
-            return null;
-        }
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -162,4 +152,49 @@ public class EditContactFragment extends Fragment{
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Retrieves the selected contact from the bundle (coming from MainActivity)
+     * @return
+     */
+    private Contact getContactFromBundle(){
+        Log.d(TAG, "getContactFromBundle: arguments: " + getArguments());
+
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            return bundle.getParcelable(getString(R.string.contact));
+        }else{
+            return null;
+        }
+    }
+
+    /**
+     * Retrieves the selected image from the bundle (coming from ChangePhotoDialog)
+     * @param bitmap
+     */
+    @Override
+    public void getBitmapImage(Bitmap bitmap) {
+        Log.d(TAG, "getBitmapImage: got the bitmap: " + bitmap);
+        //get the bitmap from 'ChangePhotoDialog'
+        if(bitmap != null) {
+            //compress the image (if you like)
+            ((MainActivity)getActivity()).compressBitmap(bitmap, 70);
+            mContactImage.setImageBitmap(bitmap);
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

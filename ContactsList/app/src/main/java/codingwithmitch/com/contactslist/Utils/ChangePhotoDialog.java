@@ -1,6 +1,12 @@
 package codingwithmitch.com.contactslist.Utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -8,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.io.File;
 
 import codingwithmitch.com.contactslist.R;
 
@@ -18,6 +26,12 @@ import codingwithmitch.com.contactslist.R;
 public class ChangePhotoDialog extends DialogFragment{
 
     private static final String TAG = "ChangePhotoDialog";
+
+    public interface OnPhotoReceivedListener{
+        public void getBitmapImage(Bitmap bitmap);
+    }
+
+    OnPhotoReceivedListener mOnPhotoReceived;
 
     @Nullable
     @Override
@@ -30,7 +44,8 @@ public class ChangePhotoDialog extends DialogFragment{
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: starting camera.");
-
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, Init.CAMERA_REQUEST_CODE);
             }
         });
 
@@ -56,4 +71,51 @@ public class ChangePhotoDialog extends DialogFragment{
 
         return view;
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            mOnPhotoReceived = (OnPhotoReceivedListener) getTargetFragment();
+        }catch (ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException: " + e.getMessage() );
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        /*
+        REsults when taking a new image with camera
+         */
+        if(requestCode == Init.CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            Log.d(TAG, "onActivityResult: done taking a picture.");
+
+            //get the new image bitmap
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            Log.d(TAG, "onActivityResult: receieved bitmap: " + bitmap);
+
+            //send the bitmap and fragment to the interface
+            mOnPhotoReceived.getBitmapImage(bitmap);
+            getDialog().dismiss();
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
