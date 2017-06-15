@@ -21,7 +21,6 @@
     <li>Custom Dialog Boxes</li></br>
     <li>Searching/Filtering a ListView</li></br>
     <li>ListViews, Custom ListAdapters</li></br>
-    <li>GridViews, Custom GridAdapters</li></br>
     <li>File Management (Creating, Retrieving, Updating and Deleting files from Android device)</li></br>
     <li>Using the Camera to Capture a Photo</li></br>
     <li>Retriving Images from the Phones Memory</li></br>
