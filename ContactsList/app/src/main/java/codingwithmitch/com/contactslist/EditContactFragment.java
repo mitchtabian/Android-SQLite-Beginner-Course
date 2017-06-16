@@ -199,6 +199,27 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
         switch (item.getItemId()){
             case R.id.menuitem_delete:
                 Log.d(TAG, "onOptionsItemSelected: deleting contact.");
+                DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+                Cursor cursor = databaseHelper.getContactID(mContact);
+
+                int contactID = -1;
+                while(cursor.moveToNext()){
+                    contactID = cursor.getInt(0);
+                }
+                if(contactID > -1){
+                    if(databaseHelper.deleteContact(contactID) > 0){
+                        Toast.makeText(getActivity(), "Contact Deleted", Toast.LENGTH_SHORT).show();
+
+                        //clear the arguments ont he current bundle since the contact is deleted
+                        this.getArguments().clear();
+
+                        //remove previous fragemnt from the backstack (therefore navigating back)
+                        getActivity().getSupportFragmentManager().popBackStack();
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "Database Error", Toast.LENGTH_SHORT).show();
+                    }
+                }
         }
         return super.onOptionsItemSelected(item);
     }

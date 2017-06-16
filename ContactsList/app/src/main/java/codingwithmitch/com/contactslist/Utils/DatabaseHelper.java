@@ -120,6 +120,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery(sql, null);
     }
 
+    public Integer deleteContact(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME, "ID = ?", new String[] {String.valueOf(id)});
+    }
+
 }
 
 
