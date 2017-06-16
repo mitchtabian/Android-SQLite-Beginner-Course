@@ -70,17 +70,17 @@ The course will also cover how to get started if you are a complete beginner. We
     <li><a href='https://goo.gl/Jdm52Y'>21 - Edit Contact Interface</a></li></br>
     <li><a href='https://goo.gl/e9rk33'>22 - Edit Contact Fragment Widgets</a></li></br>
     <li><a href='https://goo.gl/BR516u'>23 - Edit Contact Toolbar Widgets</a></li></br>
-    <li><a href='https://goo.gl/BR516u'>25 - Choose Photo Dialog</a></li></br>
-    <li><a href='https://goo.gl/STJoz5'>26 - Storage and Camera Permissions</a></li></br>
-    <li><a href='https://goo.gl/2Kibge'>27 - New Camera Image</a></li></br>
-    <li><a href='https://goo.gl/8rn9rX'>28 - Selecting an Image from Memory</a></li></br>
-    <li><a href='https://goo.gl/bhfQ6p'>29 - Add Contact Fragment FAB</a></li></br>
-    <li><a href='https://goo.gl/HtH8kr'>30 - Add Contact Fragment Widgets</a></li></br>
-    <li><a href='https://goo.gl/cg3fn5'>31 - Formatting the Phone Number</a></li></br>
-    <li><a href='https://goo.gl/cxX7mf'>32 - Search Bar Filter</a></li></br>
-    <li><a href='https://goo.gl/YkCQkF'>33 - Database Helper Class</a></li></br>
-    <li><a href='https://goo.gl/NZ3TnV'>34 - Adding Contacts</a></li></br>
-    <li><a href='https://goo.gl/87Zwyd'>35 - Viewing Contacts</a></li></br>
+    <li><a href='https://goo.gl/ExBQzr'>24 - Choose Photo Dialog</a></li></br>
+    <li><a href='https://goo.gl/STJoz5'>25 - Storage and Camera Permissions</a></li></br>
+    <li><a href='https://goo.gl/2Kibge'>26 - New Camera Image</a></li></br>
+    <li><a href='https://goo.gl/8rn9rX'>27 - Selecting an Image from Memory</a></li></br>
+    <li><a href='https://goo.gl/bhfQ6p'>28 - Add Contact Fragment FAB</a></li></br>
+    <li><a href='https://goo.gl/HtH8kr'>29 - Add Contact Fragment Widgets</a></li></br>
+    <li><a href='https://goo.gl/cg3fn5'>30 - Formatting the Phone Number</a></li></br>
+    <li><a href='https://goo.gl/cxX7mf'>31 - Search Bar Filter</a></li></br>
+    <li><a href='https://goo.gl/YkCQkF'>32 - Database Helper Class</a></li></br>
+    <li><a href='https://goo.gl/NZ3TnV'>33 - Adding Contacts</a></li></br>
+    <li><a href='https://goo.gl/87Zwyd'>34 - Viewing Contacts</a></li></br>
     <li><a href=''>More coming asap</a></li></br>
 <br/>
 
