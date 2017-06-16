@@ -1,5 +1,6 @@
 package codingwithmitch.com.contactslist;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,9 +23,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import codingwithmitch.com.contactslist.Utils.ChangePhotoDialog;
+import codingwithmitch.com.contactslist.Utils.DatabaseHelper;
 import codingwithmitch.com.contactslist.Utils.Init;
 import codingwithmitch.com.contactslist.Utils.UniversalImageLoader;
 import codingwithmitch.com.contactslist.models.Contact;
@@ -98,6 +101,34 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
             public void onClick(View v) {
                 Log.d(TAG, "onClick: saving the edited contact.");
                 //execute the save method for the database
+
+                if(checkStringIfNull(mName.getText().toString())){
+                    Log.d(TAG, "onClick: saving changes to the contact: " + mName.getText().toString());
+
+                    //get the database helper and save the contact
+                    DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
+                    Cursor cursor = databaseHelper.getContactID(mContact);
+
+                    int contactID = -1;
+                    while(cursor.moveToNext()){
+                        contactID = cursor.getInt(0);
+                    }
+                    if(contactID > -1){
+                        if(mSelectedImagePath != null){
+                            mContact.setProfileImage(mSelectedImagePath);
+                        }
+                        mContact.setName(mName.getText().toString());
+                        mContact.setPhonenumber(mPhoneNumber.getText().toString());
+                        mContact.setDevice(mSelectDevice.getSelectedItem().toString());
+                        mContact.setEmail(mEmail.getText().toString());
+
+                        databaseHelper.updateContact(mContact, contactID);
+                        Toast.makeText(getActivity(), "Contact Updated", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "Database Error", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 
@@ -131,11 +162,19 @@ public class EditContactFragment extends Fragment implements ChangePhotoDialog.O
         return view;
     }
 
+    private boolean checkStringIfNull(String string){
+        if(string.equals("")){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     private void init(){
         mPhoneNumber.setText(mContact.getPhonenumber());
         mName.setText(mContact.getName());
         mEmail.setText(mContact.getEmail());
-        UniversalImageLoader.setImage(mContact.getProfileImage(), mContactImage, null, "http://");
+        UniversalImageLoader.setImage(mContact.getProfileImage(), mContactImage, null, "");
 
         //Setting the selected device to the spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),

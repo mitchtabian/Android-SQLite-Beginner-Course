@@ -81,6 +81,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
 
+    /**
+     * Update a contact where id = @param 'id'
+     * Replace the current contact with @param 'contact'
+     * @param contact
+     * @param id
+     * @return
+     */
+    public boolean updateContact(Contact contact, int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL1, contact.getName());
+        contentValues.put(COL2, contact.getPhonenumber());
+        contentValues.put(COL3, contact.getDevice());
+        contentValues.put(COL4, contact.getEmail());
+        contentValues.put(COL5, contact.getProfileImage());
+
+        int update = db.update(TABLE_NAME, contentValues, COL0 + " = ? ", new String[] {String.valueOf(id)} );
+
+        if(update != 1) {
+            return false;
+        }
+        else{
+                return true;
+            }
+    }
+
+    /**
+     * Retrieve the contact unique id from the database using @param
+     * @param contact
+     * @return
+     */
+    public Cursor getContactID(Contact contact){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String sql = "SELECT * FROM " + TABLE_NAME  +
+                " WHERE " + COL1 + " = '" + contact.getName() + "'" +
+                " AND " + COL2 + " = '" + contact.getPhonenumber() + "'";
+        return db.rawQuery(sql, null);
+    }
+
 }
 
 
