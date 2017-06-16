@@ -81,7 +81,9 @@ The course will also cover how to get started if you are a complete beginner. We
     <li><a href='https://goo.gl/YkCQkF'>32 - Database Helper Class</a></li></br>
     <li><a href='https://goo.gl/NZ3TnV'>33 - Adding Contacts</a></li></br>
     <li><a href='https://goo.gl/87Zwyd'>34 - Viewing Contacts</a></li></br>
-    <li><a href=''>More coming asap</a></li></br>
+    <li><a href='https://goo.gl/makBsP'>35 - Updating Contacts</a></li></br>
+    <li><a href='https://goo.gl/fH1EdB'>36 - Deleting Contacts</a></li></br>
+    
 <br/>
 
 
