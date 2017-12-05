@@ -1,5 +1,6 @@
-
+<a href='https://codingwithmitch.com/courses/android-sqlite-for-beginners/'>
 <img class='header-img' src='https://s3.amazonaws.com/codingwithmitch-static-and-media/media/android-sqlite-for-beginners/images/poster.png' />
+    </a>
 
 <h1>Android SQLite Beginner Course</h1>
 <h4>All the tools you need to start developing with Android</h4>
