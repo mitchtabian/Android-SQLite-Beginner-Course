@@ -3,6 +3,7 @@
 
 <h1>Android SQLite Beginner Course</h1>
 <h4>All the tools you need to start developing with Android</h4>
+<a href='https://codingwithmitch.com/courses/android-sqlite-for-beginners/'>Watch it here</a>
 <hr>
 <p>In this video course I am <b>extremely</b> detailed as I teach you about the built-in database that comes standard in every Android device. </p>
 
